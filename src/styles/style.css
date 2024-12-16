@@ -1,0 +1,30 @@
+:root {
+
+}
+
+* {
+    box-sizing: border-box !important;
+    outline: none !important;
+    margin: 0;
+    padding: 0;
+}
+
+body, p, h1, ol, li, h1, h2, h3 {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: Georgia, serif;
+    background-color: rgb(235, 235, 235);
+}
+
+/*::-webkit-scrollbar {*/
+/*    height: 1rem;*/
+/*    width: .5rem;*/
+/*}*/
+
+.button:hover {
+    cursor: pointer;
+}

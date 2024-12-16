@@ -1,0 +1,60 @@
+
+form {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+    border: 2px inset #000000;
+    padding: 10px;
+    font-size: 20px;
+    background-color: rgb(223, 223, 223);
+}
+
+form input, form select, button {
+    width: 100%;
+    font-size: 16px;
+    border: 2px inset black;
+    padding: 10px;
+    background-color: white;
+}
+
+select {
+    width: 100%;
+    border-radius: 0;
+    appearance: none;
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="black"><path d="M7 10l5 5 5-5z"/></svg>');
+
+}
+
+form .button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+form button {
+    width: fit-content;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+form button:hover {
+    cursor: pointer;
+}
+form button:focus {
+    background-color: white;
+}
+
+.slider-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.slider-values {
+    width: 10%;
+}
