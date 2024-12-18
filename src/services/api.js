@@ -1,13 +1,21 @@
-const generate = async (data, temperature) => {
-
-    const queryParams = new URLSearchParams({
+const generate = async (data) => {
+    const queryParams = {
         url: data.url,
-        model_name: data.model_name,
-        max_output_tokens: data.max_output_tokens,
-        temperature: temperature.toString(),
-    }).toString();
+        creativity: data.creativity
+    };
 
-    const apiUrl = `https://seashell-app-unjjz.ondigitalocean.app/api/${data.mode}/retroify?${queryParams}`;
+    if (data.mode === "v3") {
+        queryParams.accuracy = data.accuracy;
+    }
+
+    if (["v1", "v2"].includes(data.mode)) {
+        queryParams.model_name = data.model_name;
+        queryParams.max_output_tokens = data.max_output_tokens;
+    }
+
+    const queryString = new URLSearchParams(queryParams).toString();
+
+    const apiUrl = `https://seashell-app-unjjz.ondigitalocean.app/api/${data.mode}/generate?${queryString}`;
 
     try {
         const response = await fetch(apiUrl, {
@@ -17,14 +25,14 @@ const generate = async (data, temperature) => {
             },
             body: '',
         });
+
         if (response.ok) {
             return await response.json();
         }
     } catch (error) {
-        alert("An error occured while generating!")
+        alert("An error occurred while generating!");
         console.error('Request failed:', error);
     }
 };
 
 export default generate;
-

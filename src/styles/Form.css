@@ -48,13 +48,25 @@ form button:focus {
     background-color: white;
 }
 
+.slider-block {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
 .slider-container {
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     gap: 10px;
 }
 
+.slider-container input {
+    width: 85%;
+}
+
 .slider-values {
-    width: 10%;
+    width: 15%;
 }

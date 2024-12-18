@@ -25,7 +25,7 @@ const Home = () => {
             <main>
                 <img src={logo} alt="logo" className="logo"/>
                 <div className={"text-container"}>
-                    <h1>Neuro Nostalgia</h1>
+                    <h1>AI Retro Engine</h1>
                     <h2>Timeless AI Design, Crafted for Modern Minds</h2>
                 </div>
                 <div className="form-container">
@@ -41,10 +41,11 @@ const Home = () => {
                     {showModal && modalUrl && !loading && (
                         <div className="modal">
                             <div className="modal-content">
+                                <a className="link" target="_blank" href={modalUrl}>Go to the page</a>
                                 <button className="close-modal" onClick={closeModal}>
                                     &times;
                                 </button>
-                                <iframe src={modalUrl} title="Result" />
+                                <iframe src={modalUrl} title="Result"/>
                             </div>
                         </div>
                     )}
@@ -52,6 +53,8 @@ const Home = () => {
             </main>
             <footer>
                 <p>Developer: <span>dvolynov@gmail.com </span></p>
+                <a href="https://seashell-app-unjjz.ondigitalocean.app/docs">AI Retro Engine API</a>
+                <a href={"https://neuronostalgia.com"}>Neuro Nostalgia Hackathon</a>
             </footer>
         </div>
     );

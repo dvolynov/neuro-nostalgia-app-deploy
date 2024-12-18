@@ -4,13 +4,10 @@ import "../styles/Form.css";
 
 import generate from "../services/api";
 
-
-function Form({setModalUrl, setShowModal, setLoading}) {
-    const [creativityValue, setCreativityValue] = useState(75);
-
-    const mapToTemperatureRange = (value) => {
-        return (value / 50) - 1;
-    };
+function Form({ setModalUrl, setShowModal, setLoading }) {
+    const [creativityValue, setCreativityValue] = useState(100);
+    const [accuracyValue, setAccuracyValue] = useState(100);
+    const [selectedMode, setSelectedMode] = useState("v3");
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -21,9 +18,11 @@ function Form({setModalUrl, setShowModal, setLoading}) {
         const formData = new FormData(event.target);
         const data = Object.fromEntries(formData.entries());
 
-        const temperature = mapToTemperatureRange(creativityValue);
+        if (data.mode === "v3") {
+            data.accuracy = accuracyValue;
+        }
 
-        const result = await generate(data, temperature);
+        const result = await generate(data);
 
         if (result) {
             setLoading(false);
@@ -36,38 +35,56 @@ function Form({setModalUrl, setShowModal, setLoading}) {
         <div>
             <form onSubmit={handleSubmit}>
                 <label>Url</label>
-                <input name="url" type="url" placeholder="https://your-url.com" required defaultValue={"https://www.deepl.com/en/translator"}/>
+                <input name="url" type="url" placeholder="https://your-url.com" required />
 
                 <label>Mode</label>
-                <select name="mode" required>
-                    <option value="v3" >Generate new structure + CSS theme with GPT-40 (API v3.0)</option>
-                    <option value="v2" defaultChecked={true}>Generate retro CSS theme (API v2.0)</option>
-                    <option value="v1">Generate new structure + CSS theme (API v1.0)</option>
+                <select
+                    name="mode"
+                    required
+                    value={selectedMode}
+                    onChange={(e) => setSelectedMode(e.target.value)}
+                >
+                    <option value="v3">Fine-tuned GPT-4o (15 sec)</option>
+                    <option value="v2">CSS theme Gemini (15 sec)</option>
+                    <option value="v1">Schema + CSS theme Gemini (30 sec)</option>
                 </select>
 
-                <label>Engine</label>
-                <select name="model_name" required>
-                    <option value="gemini-1.5-flash" defaultChecked>Fast: swift and versatile (approx. 30-40 sec)
-                    </option>
-                    <option value="gemini-1.5-pro">Pro: more intelligent (approx. 1-2 min)</option>
-                </select>
-
-                <label>Max Output Tokens</label>
-                <input name="max_output_tokens" type="number" defaultValue="8192" required/>
-
-                <label>Creativity</label>
-                <div className="slider-container">
-                    <input
-                        type="range"
-                        min="0"
-                        max="100"
-                        step="5"
-                        value={creativityValue}
-                        onChange={(e) => setCreativityValue(Number(e.target.value))}
-                    />
-                    <div className="slider-values">
-                        <span>{`${creativityValue}%`}</span>
+                <div className="slider-block">
+                    <label>Creativity</label>
+                    <div className="slider-container">
+                        <input
+                            type="range"
+                            min="40"
+                            max="100"
+                            step="10"
+                            name="creativity"
+                            value={creativityValue}
+                            onChange={(e) => setCreativityValue(Number(e.target.value))}
+                        />
+                        <div className="slider-values">
+                            <span>{`${creativityValue}%`}</span>
+                        </div>
                     </div>
+
+                    {selectedMode === "v3" && (
+                        <>
+                            <label>Accuracy</label>
+                            <div className="slider-container">
+                                <input
+                                    type="range"
+                                    min="10"
+                                    max="100"
+                                    step="10"
+                                    name="accuracy"
+                                    value={accuracyValue}
+                                    onChange={(e) => setAccuracyValue(Number(e.target.value))}
+                                />
+                                <div className="slider-values">
+                                    <span>{`${accuracyValue}%`}</span>
+                                </div>
+                            </div>
+                        </>
+                    )}
                 </div>
 
                 <div className="button-container">
